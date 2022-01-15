@@ -306,6 +306,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &771626605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 771626607}
+  - component: {fileID: 771626606}
+  m_Layer: 0
+  m_Name: PoolTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &771626606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771626605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85317ae3e1dffb43baf0f77821cd9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1471165749952640614, guid: f3c3a9b7e483c0744a14a2a4f17b307e, type: 3}
+  defaultCapacity: 2
+  maxCount: 4
+--- !u!4 &771626607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771626605}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.03845345, y: 1.3429526, z: -10.317276}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1200582133
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,8 +389,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -0.0000061989, y: -221.5}
+  m_SizeDelta: {x: 416.9918, y: 163.5681}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1200582135
 MonoBehaviour:
@@ -390,9 +436,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1200582138}
-        m_TargetAssemblyTypeName: ML.GameEvents.VoidEventCallerBehaviour, Assembly-CSharp
-        m_MethodName: Invoke
+      - m_Target: {fileID: 771626606}
+        m_TargetAssemblyTypeName: PoolTest, Assembly-CSharp
+        m_MethodName: Spawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -502,7 +548,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1473441050}
           m_TargetAssemblyTypeName: DebugBehaviour, Assembly-CSharp
-          m_MethodName: LogError
+          m_MethodName: Log
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

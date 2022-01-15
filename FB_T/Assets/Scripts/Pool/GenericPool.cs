@@ -1,77 +1,102 @@
 using System;
 using System.Collections.Generic;
 
-public class GenericPool<T>
+namespace ML.Pool
 {
-    Func<T> onCreate;
-    Action<T> onGet;
-    Action<T> onRelease;
-    Action<T> onDestory;
-    int defaultCapacity;
-    int maxSize;
-    Queue<T> pool = new Queue<T>();
-    Queue<T> inUse = new Queue<T>();
-
-    GenericPool(Func<T> funcOnCreate, Action<T> actionOnGet = null, Action<T> actionOnRelease = null, Action<T> actionOnDestroy = null, int defaultCapacity = 0, int maxSize = 0)
+    public class GenericPool<T>
     {
-        onCreate = funcOnCreate;
-        onGet = actionOnGet;
-        onRelease = actionOnRelease;
-        onDestory = actionOnDestroy;
-        this.defaultCapacity = defaultCapacity;
-        this.maxSize = maxSize;
+        Func<T> onCreate;
+        Action<T> onGet;
+        Action<T> onRelease;
+        Action<T> onDestory;
+        int defaultCapacity;
+        int maxSize;
+        Queue<T> pool = new Queue<T>();
+        Queue<T> inUse = new Queue<T>();
 
-        if(defaultCapacity > 0)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="funcOnCreate"></param>
+        /// <param name="actionOnGet"></param>
+        /// <param name="actionOnRelease"></param>
+        /// <param name="actionOnDestroy"></param>
+        /// <param name="defaultCapacity"></param>
+        /// <param name="maxSize"></param>
+        public GenericPool(Func<T> funcOnCreate, Action<T> actionOnGet = null, Action<T> actionOnRelease = null, Action<T> actionOnDestroy = null, int defaultCapacity = 0, int maxSize = 0)
         {
-            PreWarm();
-        }
-    }
+            onCreate = funcOnCreate;
+            onGet = actionOnGet;
+            onRelease = actionOnRelease;
+            onDestory = actionOnDestroy;
+            this.defaultCapacity = defaultCapacity;
+            this.maxSize = maxSize;
 
-    private void PreWarm() 
-    {
-        for(int i = 0; i < maxSize; i++)
-        {
-            pool.Enqueue(onCreate());
-        }
-    }
-    public T Get()
-    {
-        T newInstance;
-        if (pool.Count == 0)
-        {
-            if (inUse.Count >= maxSize)
+            if (defaultCapacity > 0)
             {
-                newInstance = inUse.Dequeue();
-                inUse.Enqueue(newInstance);
-                onRelease(newInstance);
-                onGet(newInstance);
+                PreWarm();
+            }
+        }
+
+        private void PreWarm()
+        {
+            for (int i = 0; i < defaultCapacity; i++)
+            {
+                pool.Enqueue(onCreate());
+            }
+        }
+        public T Get()
+        {
+            T newInstance;
+            if (pool.Count == 0)
+            {
+                if (inUse.Count >= maxSize && maxSize != 0)
+                {
+                    newInstance = inUse.Dequeue();
+                    onRelease(newInstance);
+                }
+                else
+                {
+                    newInstance = onCreate();
+                }
             }
             else
             {
-                newInstance = onCreate();
+                newInstance = pool.Dequeue();
+                if (newInstance == null) //if the instance of the object was destroyed
+                    newInstance = onCreate();
+            }
+            inUse.Enqueue(newInstance);
+            onGet(newInstance);
+            return newInstance;
+        }
+        public void Release(T element)
+        {
+            inUse.Dequeue();
+            onRelease(element);
+            if (pool.Count < defaultCapacity)
+            {
+                pool.Enqueue(element);
+            }
+            else
+            {
+                onDestory(element);
             }
         }
-        else
+        public void Dispose()
         {
-            newInstance = pool.Dequeue();
-            if(newInstance == null) //if the instance of the object was destroyed
-                newInstance = onCreate();
+            T[] inUseArray = inUse.ToArray(); //my tests shows that converting queue to array and doing operation on for loop is faster than foreach on queue
+            for (int i = inUseArray.Length - 1; i >= 0; i--)
+            {
+                Release(inUseArray[i]);
+            }
         }
-        inUse.Enqueue(newInstance);
-        onGet(newInstance);
-        return newInstance;
-    }
-    public void Release(T element)
-    {
-        inUse.Dequeue();
-        onRelease(element);
-        if(pool.Count <= defaultCapacity)
+        public void Clear()
         {
-            pool.Enqueue(element);
-        }
-        else
-        {
-            onDestory(element);
+            int backupDefaultCapacity = defaultCapacity;
+            defaultCapacity = 0;
+            Dispose();
+            defaultCapacity = backupDefaultCapacity;
         }
     }
 }

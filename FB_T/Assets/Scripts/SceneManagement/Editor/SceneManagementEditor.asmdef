@@ -1,0 +1,18 @@
+{
+    "name": "SceneManagementEditor",
+    "rootNamespace": "ML.SceneManagementEditor",
+    "references": [
+        "GUID:a1f354fbc33e15b45bf506f977b814d1"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
