@@ -43,7 +43,8 @@ public class Bird : MonoBehaviour
     void AddJumpBuffer(Void arg)
     {
         if(!die)
-            myRigidbody.velocity = (Vector2.up * gamePlaySettings.JumpVelocity);
+            if(myRigidbody.position.y < gamePlaySettings.MaxAltitudeHeight)
+                myRigidbody.velocity = (Vector2.up * gamePlaySettings.JumpVelocity);
     }
     void OnDie(Void arg) => die = true;
     void OnGameStart(Void arg) => die = false;
