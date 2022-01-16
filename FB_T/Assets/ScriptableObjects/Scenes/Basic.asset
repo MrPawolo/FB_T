@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: Basic
   m_EditorClassIdentifier: 
   scenesIndexes:
+  - Scenes/Audio
+  - Scenes/Input
   - Scenes/GamePlayScene
+  - Scenes/UI
   sceneAssets:
+  - {fileID: 102900000, guid: c45e748f6520bf243b4ab2bc26e8ee17, type: 3}
+  - {fileID: 102900000, guid: 0dd60d0fc6766fd48be20605b0cbf4f4, type: 3}
   - {fileID: 102900000, guid: ab2e1cbd06216d54da96cc35d264c865, type: 3}
+  - {fileID: 102900000, guid: 0301bca485e22df47af65811bb5e16ba, type: 3}

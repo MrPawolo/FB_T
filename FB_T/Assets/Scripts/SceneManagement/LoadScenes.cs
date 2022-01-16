@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,12 +12,15 @@ namespace ML.SceneManagement
 
         private void Start()
         {
+            if (scenesHolder == null)
+            {
+                Debug.LogError("No Scene Holder is Attached", this.gameObject);
+                return;
+            }
             var scenes = scenesHolder.GetSceneIndexes();
             foreach(var scene in scenes)
             {
                 AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
-                asyncOperation.allowSceneActivation = true;
-
             }
         }
     }

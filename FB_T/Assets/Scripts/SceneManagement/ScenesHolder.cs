@@ -20,13 +20,16 @@ namespace ML.SceneManagement
 
 
 #if UNITY_EDITOR
+
         [SerializeField] private SceneAsset[] sceneAssets;
+
         private void OnValidate()
         {
             BuildScenes();
         }
         void BuildScenes()
         {
+            scenesIndexes.Clear();
             for (int i = 0; i < sceneAssets.Length; i++)
             {
                 if (sceneAssets[i] == null)
