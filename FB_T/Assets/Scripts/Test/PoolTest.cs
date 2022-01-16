@@ -33,7 +33,7 @@ public class PoolTest : MonoBehaviour
     {
         GameObject gameObject = Instantiate(prefab);
         gameObject.SetActive(false);
-        gameObject.GetComponent<IPoolable>().ActionOnRelease(Release);
+        gameObject.GetComponent<IPoolable>().onRelease = Release;
         return gameObject;
     }
 

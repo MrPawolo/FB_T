@@ -83,6 +83,9 @@ namespace ML.Pool
                 onDestory(element);
             }
         }
+        /// <summary>
+        /// Return all objects to pool
+        /// </summary>
         public void Dispose()
         {
             T[] inUseArray = inUse.ToArray(); //my tests shows that converting queue to array and doing operation on for loop is faster than foreach on queue

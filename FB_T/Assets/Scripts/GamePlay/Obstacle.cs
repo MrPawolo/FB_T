@@ -1,9 +1,10 @@
 using ML.GameEvents;
+using ML.Pool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class Obstacle : MonoBehaviour, IPoolable, IDestroy
 {
     [SerializeField] GamePlaySettings gamePlaySettings;
     [SerializeField] VoidListener onBirdDie;
@@ -11,6 +12,9 @@ public class Obstacle : MonoBehaviour
     float speedMul = 1;
     
     Rigidbody2D myRigidbody;
+
+    public System.Action<GameObject> onRelease { get ; set ; }
+
     private void Awake()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -28,9 +32,7 @@ public class Obstacle : MonoBehaviour
     }
     private void OnEnable()
     {
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        transform.position += Vector3.up *
-            Random.Range(gamePlaySettings.MinMaxObstacleGapHeight.x, gamePlaySettings.MinMaxObstacleGapHeight.x);
+        
     }
 
     void OnBirdDie(Void arg) => speedMul = 0;
@@ -38,5 +40,11 @@ public class Obstacle : MonoBehaviour
     private void FixedUpdate()
     {
         myRigidbody.MovePosition(myRigidbody.position + Vector2.left * gamePlaySettings.Speed * Time.fixedDeltaTime * speedMul);
+    }
+
+    [ContextMenu("ForceDestroy")]
+    public void Destroy()
+    {
+        onRelease?.Invoke(this.gameObject);
     }
 }

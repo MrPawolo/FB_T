@@ -11,16 +11,7 @@ public class ObjToPool : MonoBehaviour, IPoolable
 
     float timeStart;
 
-    public void ActionOnRelease(Action<GameObject> action)
-    {
-        onRelease = action;
-    }
-
-    //public ObjToPool(Action<object> actionOnRelease)
-    //{
-    //    onRelease = actionOnRelease;
-    //}
-
+    Action<GameObject> IPoolable.onRelease { get; set; }
 
     private void OnEnable()
     {

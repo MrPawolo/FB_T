@@ -12,18 +12,23 @@ public class Poles : MonoBehaviour
 
     private void Awake()
     {
-        childrens = GetComponentsInChildren<Transform>();
+        int childCount = transform.childCount;
+        childrens = new Transform[childCount];
+        for(int i = 0; i < childCount; i++)
+        {
+            childrens[i] = transform.GetChild(i);
+        }
         startPos = new Vector3[childrens.Length];
         for(int i = 0; i< startPos.Length; i++)
         {
-            startPos[i] = childrens[i].position;
+            startPos[i] = childrens[i].localPosition;
         }
     }
     private void OnEnable()
     {
         for(int i = 0; i < childrens.Length; i++)
         {
-            childrens[i].position = new Vector3(startPos[i].x, startPos[i].y + (Mathf.Sign(startPos[i].y) * (gamePlaySettings.GapSize / 2)), startPos[i].z);
+            childrens[i].localPosition = new Vector3(transform.localPosition.x, startPos[i].y + (Mathf.Sign(startPos[i].y) * (gamePlaySettings.GapSize / 2)), transform.localPosition.z);
         }
     }
 

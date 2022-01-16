@@ -9,14 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 531a6134047ba9e4eb0d218360ddc64d, type: 3}
-  m_Name: GamePlaySettings
+  m_Script: {fileID: 11500000, guid: e143d4fb83422a3478975709855efe61, type: 3}
+  m_Name: OnGameOver
   m_EditorClassIdentifier: 
-  maxAltitudeHeight: 3.3
-  jumpVelocity: 5.5
-  birdRoateMul: 8.06
-  gapSize: 3
-  speed: 1
-  doubleTapTime: 0.22
-  spawnRate: 3
-  minMaxObstacleGapHeight: {x: -1, y: 1.8}

@@ -12,7 +12,7 @@ public class GroundTexOffset : MonoBehaviour
 
     [SerializeField] VoidListener onBirdDie;
     [SerializeField] VoidListener onGameStart;
-    float speedMul = 1;
+    float speedMul = 0;
 
     Rigidbody2D myRigidbody;
     private void Awake()

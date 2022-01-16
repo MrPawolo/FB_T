@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +8,7 @@ namespace ML.SceneManagement
         [SerializeField] ScenesHolder scenesHolder;
         public ScenesHolder ScenesHolder { get { return scenesHolder; } }
 
+
         private void Start()
         {
             if (scenesHolder == null)
@@ -18,11 +17,13 @@ namespace ML.SceneManagement
                 return;
             }
             var scenes = scenesHolder.GetSceneIndexes();
-            foreach(var scene in scenes)
+           
+            foreach (var scene in scenes)
             {
-                AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+                SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
             }
         }
+
     }
 }
 

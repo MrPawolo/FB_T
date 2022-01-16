@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GamePlaySettings", menuName = "ML/GamePlaySettings")]
 public class GamePlaySettings : ScriptableObject
 {
+    [SerializeField] int bombPerObstacles = 10;
     [Header("Bird")]
     [SerializeField] float maxAltitudeHeight = 3.3f;
     [SerializeField] float jumpVelocity = 5.5f;
@@ -16,6 +17,7 @@ public class GamePlaySettings : ScriptableObject
     [SerializeField] float spawnRate = 1f;
     [SerializeField] Vector2 minMaxObstacleGapHeight = new Vector2(-2, 2);
 
+    public int BombPerObstacles { get { return bombPerObstacles; } }
     public float MaxAltitudeHeight {  get { return maxAltitudeHeight; } }
     public float JumpVelocity { get { return jumpVelocity; } }
     public float BirdRotateMul {  get { return birdRoateMul; } }
