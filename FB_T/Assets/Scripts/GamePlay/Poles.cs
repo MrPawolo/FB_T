@@ -1,35 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using ML.GameEvents;
 
-public class Poles : MonoBehaviour
+namespace ML.GamePlay
 {
-    [SerializeField] GamePlaySettings gamePlaySettings;
-
-    Transform[] childrens;
-    Vector3[] startPos;
-
-    private void Awake()
+    public class Poles : MonoBehaviour
     {
-        int childCount = transform.childCount;
-        childrens = new Transform[childCount];
-        for(int i = 0; i < childCount; i++)
+        [SerializeField] GamePlaySettings gamePlaySettings;
+
+        Transform[] childrens;
+        Vector3[] startPos;
+
+        private void Awake()
         {
-            childrens[i] = transform.GetChild(i);
+            int childCount = transform.childCount;
+            childrens = new Transform[childCount];
+            for (int i = 0; i < childCount; i++)
+            {
+                childrens[i] = transform.GetChild(i);
+            }
+            startPos = new Vector3[childrens.Length];
+            for (int i = 0; i < startPos.Length; i++)
+            {
+                startPos[i] = childrens[i].localPosition;
+            }
         }
-        startPos = new Vector3[childrens.Length];
-        for(int i = 0; i< startPos.Length; i++)
+        private void OnEnable()
         {
-            startPos[i] = childrens[i].localPosition;
+            for (int i = 0; i < childrens.Length; i++)
+            {
+                childrens[i].localPosition = new Vector3(transform.localPosition.x, startPos[i].y + (Mathf.Sign(startPos[i].y) * (gamePlaySettings.GapSize / 2)), transform.localPosition.z);
+            }
         }
     }
-    private void OnEnable()
-    {
-        for(int i = 0; i < childrens.Length; i++)
-        {
-            childrens[i].localPosition = new Vector3(transform.localPosition.x, startPos[i].y + (Mathf.Sign(startPos[i].y) * (gamePlaySettings.GapSize / 2)), transform.localPosition.z);
-        }
-    }
-
 }

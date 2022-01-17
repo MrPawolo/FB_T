@@ -1,4 +1,7 @@
-public interface IDestroy
+namespace ML.GamePlay
 {
-    void Destroy();
+    public interface IDestroy
+    {
+        void Destroy();
+    }
 }

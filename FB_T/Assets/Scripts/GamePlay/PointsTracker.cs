@@ -1,58 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ML.GameEvents;
 
-public class PointsTracker : MonoBehaviour
+namespace ML.GamePlay
 {
-    [SerializeField] GamePlaySettings gamePlaySettings;
-    [SerializeField] IntEvent onUpdatePoints;
-    [SerializeField] VoidListener onEarnPoint;
-    [SerializeField] VoidListener onGameStart;
-    [SerializeField] VoidListener onLevelRestart;
- 
-    public static int points = 0;
-
-    private void Start()
+    public class PointsTracker : MonoBehaviour
     {
-        onEarnPoint.onGameEventInvoke += OnEarnPoint;
-        onEarnPoint.HookToGameEvent();
-        onGameStart.onGameEventInvoke += OnGameStart;
-        onGameStart.HookToGameEvent();
-        onLevelRestart.onGameEventInvoke += OnLevelRestart;
-        onLevelRestart.HookToGameEvent();
+        [SerializeField] GamePlaySettings gamePlaySettings;
+        [SerializeField] IntEvent onUpdatePoints;
+        [SerializeField] VoidListener onEarnPoint;
+        [SerializeField] VoidListener onGameStart;
+        [SerializeField] VoidListener onLevelRestart;
+
+        public static int points = 0;
+
+        private void Start()
+        {
+            onEarnPoint.onGameEventInvoke += OnEarnPoint;
+            onEarnPoint.HookToGameEvent();
+            onGameStart.onGameEventInvoke += OnGameStart;
+            onGameStart.HookToGameEvent();
+            onLevelRestart.onGameEventInvoke += OnLevelRestart;
+            onLevelRestart.HookToGameEvent();
+        }
+
+        private void OnDisable()
+        {
+            onEarnPoint.onGameEventInvoke -= OnEarnPoint;
+            onEarnPoint.UnHookFromGameEvent();
+            onGameStart.onGameEventInvoke -= OnGameStart;
+            onGameStart.UnHookFromGameEvent();
+            onLevelRestart.onGameEventInvoke -= OnLevelRestart;
+            onLevelRestart.UnHookFromGameEvent();
+        }
+
+        private void OnLevelRestart(Void obj)
+        {
+            points = 0;
+        }
+
+        void OnEarnPoint(Void arg)
+        {
+            if (GameOver.gameOver)
+                return;
+            points++;
+            onUpdatePoints?.Invoke(points);
+        }
+
+        void OnGameStart(Void arg)
+        {
+            points = 0;
+        }
     }
-
-
-    private void OnDisable()
-    {
-        onEarnPoint.onGameEventInvoke -= OnEarnPoint;
-        onEarnPoint.UnHookFromGameEvent();
-        onGameStart.onGameEventInvoke -= OnGameStart;
-        onGameStart.UnHookFromGameEvent();
-        onLevelRestart.onGameEventInvoke -= OnLevelRestart;
-        onLevelRestart.UnHookFromGameEvent();
-    }
-
-    private void OnLevelRestart(Void obj)
-    {
-        points = 0;
-        //onUpdatePoints?.Invoke(points);
-    }
-    void OnEarnPoint(Void arg)
-    {
-        if (GameOver.gameOver)
-            return;
-        points++;
-        onUpdatePoints?.Invoke(points);
-        
-    }
-
-    void OnGameStart(Void arg)
-    {
-        points = 0;
-        //onUpdatePoints?.Invoke(points);
-    }
-
-
 }

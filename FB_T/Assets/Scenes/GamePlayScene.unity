@@ -1027,6 +1027,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3419296508922787461, guid: 0f6afefd3bb6df24c9372aa9efc27c21, type: 3}
+      propertyPath: onTap.gameEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 6314bcd6af92a914784ff765a5a519d7, type: 2}
     - target: {fileID: 3419296508922787462, guid: 0f6afefd3bb6df24c9372aa9efc27c21, type: 3}
       propertyPath: m_RootOrder
       value: 1

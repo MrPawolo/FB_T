@@ -1,30 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ML.GameEvents;
-using System;
 
-public class GameOver : MonoBehaviour
+namespace ML.GamePlay
 {
-    [SerializeField] VoidListener onBirdDie;
-    [SerializeField] VoidListener onLevelRestart;
-    [SerializeField] VoidEvent onGameOver;
-
-
-    public static bool gameOver = false;
-    private void Start()
+    public class GameOver : MonoBehaviour
     {
-        onBirdDie.onGameEventInvoke += (arg) => {
-            if (gameOver)
-                return;
-            gameOver = true;
-            onGameOver?.Invoke();
-        };
-        onBirdDie.HookToGameEvent();
+        [SerializeField] VoidListener onBirdDie;
+        [SerializeField] VoidListener onLevelRestart;
+        [SerializeField] VoidEvent onGameOver;
 
+        public static bool gameOver = false;
 
-        onLevelRestart.onGameEventInvoke += (arg) => { gameOver = false; };
-        onLevelRestart.HookToGameEvent();
+        private void Start()
+        {
+            onBirdDie.onGameEventInvoke += (arg) =>
+            {
+                if (gameOver)
+                    return;
+                gameOver = true;
+                onGameOver?.Invoke();
+            };
+            onBirdDie.HookToGameEvent();
+
+            onLevelRestart.onGameEventInvoke += (arg) => { gameOver = false; };
+            onLevelRestart.HookToGameEvent();
+        }
     }
-
 }

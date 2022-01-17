@@ -1,36 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ML.GameEvents;
 
-public class BombArea : MonoBehaviour
+namespace ML.GamePlay
 {
-    [SerializeField] VoidListener onDoubleClick;
-    [SerializeField] VoidEvent onUseBomb;
-    [SerializeField] LayerMask layerMask;
-    BoxCollider2D bombCollider;
-    void Start()
+    public class BombArea : MonoBehaviour
     {
-        bombCollider = GetComponent<BoxCollider2D>();
-        onDoubleClick.onGameEventInvoke += OnBomb;
-        onDoubleClick.HookToGameEvent();
-    }
+        [SerializeField] VoidListener onDoubleClick;
+        [SerializeField] VoidEvent onUseBomb;
+        [SerializeField] LayerMask layerMask;
 
-
-
-    void OnBomb(Void arg)
-    {
-        if (!BombTracker.CanUseBomb())
-            return;
-
-        onUseBomb?.Invoke();
-
-        RaycastHit2D[] raycastHit2Ds = Physics2D.BoxCastAll(transform.position, bombCollider.size* transform.localScale, 0, Vector2.zero, 0, layerMask);
-        for(int i = 0; i < raycastHit2Ds.Length; i++)
+        BoxCollider2D bombCollider;
+        void Start()
         {
-            if(raycastHit2Ds[i].collider.TryGetComponent(out IDestroy destroy))
+            bombCollider = GetComponent<BoxCollider2D>();
+            onDoubleClick.onGameEventInvoke += OnBomb;
+            onDoubleClick.HookToGameEvent();
+        }
+
+        void OnBomb(Void arg)
+        {
+            if (!BombTracker.CanUseBomb())
+                return;
+
+            onUseBomb?.Invoke();
+
+            RaycastHit2D[] raycastHit2Ds = Physics2D.BoxCastAll(transform.position, bombCollider.size * transform.localScale, 0, Vector2.zero, 0, layerMask);
+            for (int i = 0; i < raycastHit2Ds.Length; i++)
             {
-                destroy.Destroy();
+                if (raycastHit2Ds[i].collider.TryGetComponent(out IDestroy destroy))
+                {
+                    destroy.Destroy();
+                }
             }
         }
     }
