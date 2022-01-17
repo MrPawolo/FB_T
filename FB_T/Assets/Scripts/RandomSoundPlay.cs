@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RandomSoundPlay : MonoBehaviour
 {
+    [Range(0, 1)] [SerializeField] float volume = 1;
     [SerializeField] AudioClip[] sounds;
 
     AudioSource audioSource;
@@ -19,6 +20,7 @@ public class RandomSoundPlay : MonoBehaviour
         if (sounds.Length == 0)
             return;
         int track = Random.Range(0, sounds.Length);
+        audioSource.volume = volume;
         audioSource.PlayOneShot(sounds[track]);
     }
 }

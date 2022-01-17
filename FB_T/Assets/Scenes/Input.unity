@@ -135,6 +135,9 @@ GameObject:
   - component: {fileID: 47525688}
   - component: {fileID: 47525687}
   - component: {fileID: 47525686}
+  - component: {fileID: 47525692}
+  - component: {fileID: 47525691}
+  - component: {fileID: 47525690}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -223,6 +226,64 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &47525690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47525685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4f910c53bfed864eaeb5e15439682db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDoubleTap: {fileID: 11400000, guid: 2523846e893df10418bf8f9f8c9878ed, type: 2}
+  gamePlaySettings: {fileID: 11400000, guid: 79ed56242ac20144f980087d7bd386c6, type: 2}
+  onTap:
+    gameEvent: {fileID: 11400000, guid: 6314bcd6af92a914784ff765a5a519d7, type: 2}
+--- !u!114 &47525691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47525685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46af43f84ecba5d44a0209fa1eb14a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 6314bcd6af92a914784ff765a5a519d7, type: 2}
+--- !u!114 &47525692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47525685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 47525691}
+          m_TargetAssemblyTypeName: ML.GameEvents.VoidEventCallerBehaviour, GameEvents
+          m_MethodName: Invoke
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &362675957
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +331,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1060434915}
+      - m_Target: {fileID: 47525691}
         m_TargetAssemblyTypeName: ML.GameEvents.VoidEventCallerBehaviour, GameEvents
         m_MethodName: Invoke
         m_Mode: 1
@@ -336,9 +397,6 @@ GameObject:
   - component: {fileID: 1060434913}
   - component: {fileID: 1060434918}
   - component: {fileID: 1060434917}
-  - component: {fileID: 1060434916}
-  - component: {fileID: 1060434915}
-  - component: {fileID: 1060434914}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -365,64 +423,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1060434914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060434912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4f910c53bfed864eaeb5e15439682db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onDoubleTap: {fileID: 11400000, guid: 2523846e893df10418bf8f9f8c9878ed, type: 2}
-  gamePlaySettings: {fileID: 11400000, guid: 79ed56242ac20144f980087d7bd386c6, type: 2}
-  onTap:
-    gameEvent: {fileID: 11400000, guid: 6314bcd6af92a914784ff765a5a519d7, type: 2}
---- !u!114 &1060434915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060434912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46af43f84ecba5d44a0209fa1eb14a99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 6314bcd6af92a914784ff765a5a519d7, type: 2}
---- !u!114 &1060434916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060434912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1060434915}
-          m_TargetAssemblyTypeName: ML.GameEvents.VoidEventCallerBehaviour, GameEvents
-          m_MethodName: Invoke
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &1060434917
 MonoBehaviour:
   m_ObjectHideFlags: 0

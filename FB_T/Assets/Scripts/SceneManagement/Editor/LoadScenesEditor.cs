@@ -13,8 +13,9 @@ namespace ML.SceneManagement
         {
             base.OnInspectorGUI();
             LoadScenes loadScenes = (LoadScenes)target;
-            
 
+            if (Application.isPlaying)
+                return;
             if (loadScenes == null)
                 return;
             if (loadScenes.ScenesHolder == null)

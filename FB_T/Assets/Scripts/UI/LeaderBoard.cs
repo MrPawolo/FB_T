@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using ML.GameEvents;
+using ML.SaveSystem;
 using System;
 
-public class LeaderBoard : MonoBehaviour
+public class LeaderBoard : MonoBehaviour, ISaveable
 {
-    [SerializeField] IntListener onPointUpdate;
-    [SerializeField] VoidListener onGameOver;
+    [SerializeField] RectTransform leaderBoardTransform;
     [SerializeField] GameObject textPrefab;
+    [SerializeField] VoidListener onGameOver;
     [SerializeField] VoidEvent onNewHighScore;
+
+
     List<TMP_Text> texts = new List<TMP_Text>();
     List<int> hightScores = new List<int>();
-    int scoresToShow = 5;
-    int points = 0;
+    readonly int scoresToShow = 5;
 
     private void Awake() => Load();
     private void Load()
@@ -23,27 +25,30 @@ public class LeaderBoard : MonoBehaviour
         {
             hightScores.Add(0);
         }
+        SavingLoading.Instance.Load();
     }
 
     void Start()
     {
-        onPointUpdate.onGameEventInvoke += OnPointUpdate;
-        onPointUpdate.HookToGameEvent();
         onGameOver.onGameEventInvoke += OnGameOver;
         onGameOver.HookToGameEvent();
 
-        for(int i = 0; i < scoresToShow; i++)
+        PrewarmLeaderBoard();
+    }
+
+    private void PrewarmLeaderBoard()
+    {
+        for (int i = 0; i < scoresToShow; i++)
         {
             GameObject gameObject = Instantiate(textPrefab);
-            gameObject.transform.SetParent(transform);
+            gameObject.transform.SetParent(leaderBoardTransform);
             gameObject.transform.localScale = Vector3.one;
             texts.Add(gameObject.GetComponent<TMP_Text>());
         }
     }
+
     private void OnDestroy()
     {
-        onPointUpdate.onGameEventInvoke -= OnPointUpdate;
-        onPointUpdate.UnHookFromGameEvent();
         onGameOver.onGameEventInvoke -= OnGameOver;
         onGameOver.UnHookFromGameEvent();
     }
@@ -62,7 +67,7 @@ public class LeaderBoard : MonoBehaviour
             if (minI < hightScores[i])
                 minI = hightScores[i];
         }
-        if (points > minI)
+        if (PointsTracker.points > minI)
         {
             onNewHighScore?.Invoke();
         }
@@ -70,21 +75,53 @@ public class LeaderBoard : MonoBehaviour
 
     private void DrawLeaderBoard()
     {
-        hightScores.Add(points);
+        if (IsInTheLeaderboardTheSameScore())
+            return;
+        UpdateHighScores();
+
+        SavingLoading.Instance.Save();
+    }
+
+    private void UpdateHighScores()
+    {
+        hightScores.Add(PointsTracker.points);
         hightScores.Sort();
-        if(hightScores.Count > scoresToShow)
+        if (hightScores.Count > scoresToShow)
         {
             hightScores.RemoveAt(0);
         }
         hightScores.Reverse();
-        for(int i = 0; i < hightScores.Count; i++)
+
+        for (int i = 0; i < hightScores.Count; i++)
         {
-            texts[i].text = $"{i+1}. {hightScores[i]}"; 
+            texts[i].text = $"{i + 1}. {hightScores[i]}";
         }
     }
 
-    private void OnPointUpdate(int val) 
+    bool IsInTheLeaderboardTheSameScore()
     {
-        points = val;
+        for (int i = 0; i < hightScores.Count; i++)
+        {
+            if (hightScores[i] == PointsTracker.points)
+                return true;
+        }
+        return false;
     }
+
+    public object CaptureState()
+    {
+        LeaderBoardState leaderBoardState = new LeaderBoardState();
+        leaderBoardState.highScores = hightScores;
+        return leaderBoardState;
+    }
+    public void RestoreState(object state)
+    {
+        LeaderBoardState leaderBoardState = (LeaderBoardState)state;
+        hightScores = leaderBoardState.highScores;
+    }
+}
+[System.Serializable]
+public struct LeaderBoardState
+{
+    public List<int> highScores;
 }

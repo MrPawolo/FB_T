@@ -11,7 +11,7 @@ public class GameOver : MonoBehaviour
     [SerializeField] VoidEvent onGameOver;
 
 
-    bool gameOver = false;
+    public static bool gameOver = false;
     private void Start()
     {
         onBirdDie.onGameEventInvoke += (arg) => {
@@ -21,10 +21,10 @@ public class GameOver : MonoBehaviour
             onGameOver?.Invoke();
         };
         onBirdDie.HookToGameEvent();
+
+
         onLevelRestart.onGameEventInvoke += (arg) => { gameOver = false; };
         onLevelRestart.HookToGameEvent();
-
-        
     }
 
 }

@@ -64,6 +64,7 @@ public class ObstacleSpawner : MonoBehaviour
     {
         GameObject gameObject = Instantiate(obstaclePrefab);
         gameObject.SetActive(false);
+        gameObject.transform.SetParent(transform);
         if(gameObject.TryGetComponent(out IPoolable poolable))
         {
             poolable.onRelease = actionOnRelease;

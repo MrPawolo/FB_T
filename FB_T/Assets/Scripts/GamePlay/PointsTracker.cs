@@ -9,11 +9,9 @@ public class PointsTracker : MonoBehaviour
     [SerializeField] IntEvent onUpdatePoints;
     [SerializeField] VoidListener onEarnPoint;
     [SerializeField] VoidListener onGameStart;
-    [SerializeField] VoidListener onGameOver;
-    [SerializeField] VoidEvent onEarnBomb;
+    [SerializeField] VoidListener onLevelRestart;
  
-    int points = 0;
-    bool isDead = false;
+    public static int points = 0;
 
     private void Start()
     {
@@ -21,45 +19,39 @@ public class PointsTracker : MonoBehaviour
         onEarnPoint.HookToGameEvent();
         onGameStart.onGameEventInvoke += OnGameStart;
         onGameStart.HookToGameEvent();
-        onGameOver.onGameEventInvoke += OnGameOver;
-        onGameOver.HookToGameEvent();
+        onLevelRestart.onGameEventInvoke += OnLevelRestart;
+        onLevelRestart.HookToGameEvent();
     }
+
+
     private void OnDisable()
     {
         onEarnPoint.onGameEventInvoke -= OnEarnPoint;
         onEarnPoint.UnHookFromGameEvent();
         onGameStart.onGameEventInvoke -= OnGameStart;
         onGameStart.UnHookFromGameEvent();
-        onGameOver.onGameEventInvoke -= OnGameOver;
-        onGameOver.UnHookFromGameEvent();
+        onLevelRestart.onGameEventInvoke -= OnLevelRestart;
+        onLevelRestart.UnHookFromGameEvent();
     }
 
+    private void OnLevelRestart(Void obj)
+    {
+        points = 0;
+        //onUpdatePoints?.Invoke(points);
+    }
     void OnEarnPoint(Void arg)
     {
-        if (isDead)
+        if (GameOver.gameOver)
             return;
         points++;
         onUpdatePoints?.Invoke(points);
-        float resoult = points / gamePlaySettings.BombPerObstacles;
-        if ( (Mathf.Floor(resoult) - resoult) == 0)
-        {
-            onEarnBomb?.Invoke();
-        }
-    }
-
-    void OnGameOver(Void arg)
-    {
-        if (isDead)
-            return;
-        isDead = true;
-        onUpdatePoints?.Invoke(points);
+        
     }
 
     void OnGameStart(Void arg)
     {
-        isDead = false;
         points = 0;
-        onUpdatePoints?.Invoke(points);
+        //onUpdatePoints?.Invoke(points);
     }
 
 

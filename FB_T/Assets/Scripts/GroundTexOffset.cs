@@ -22,6 +22,7 @@ public class GroundTexOffset : MonoBehaviour
         onBirdDie.HookToGameEvent();
         onGameStart.onGameEventInvoke += OnGameStart;
         onGameStart.HookToGameEvent();
+        mat.SetTextureOffset("_MainTex", Vector2.zero);
     }
     private void OnDestroy()
     {
